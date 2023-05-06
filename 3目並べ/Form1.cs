@@ -15,9 +15,11 @@ namespace _3目並べ
     {
         public string[] mark = new string[] { "", "○", "×" };
 
+        public string[] player = new string[] { "", "あなた", "CPU" };
+
         public Boolean PrimaryTurn;
 
-        public int gameCount, Turn;
+        public int gameCount, Turn, cpuTurn;
 
         public int[] gameBoard = new int[9];
 
@@ -35,6 +37,7 @@ namespace _3目並べ
             Random random = new Random();
             Turn = random.Next(2) + 1;
             YourTurn = (Turn == 1);
+            cpuTurn = shiftTurn(YourTurn);
             label.Text = "あなたの手番は" + mark[Turn] + "です。" ;
 
         }
@@ -62,6 +65,8 @@ namespace _3目並べ
 
             ButtonMemory();
 
+            clear(Turn, gameCount);
+
             while (n == -1)
             {
                 int randomIndex = randomcpu.Next(9);
@@ -78,6 +83,8 @@ namespace _3目並べ
             Drow(!YourTurn, cpubtn);
 
             ButtonMemory();
+
+            clear(cpuTurn, gameCount);
         }
 
         public void ButtonMemory()
@@ -119,6 +126,78 @@ namespace _3目並べ
 
             gameCount++;
 
+        }
+
+        private Boolean judge(int k)
+        {
+            int[,] finish = new int[8, 3] {{0, 1, 2},
+                                   {3, 4, 5},
+                                   {6, 7, 8},
+                                   {0, 3, 6},
+                                   {1, 4, 7},
+                                   {2, 5, 8},
+                                   {0, 4, 8},
+                                   {2, 4, 6}
+                                  };
+            int cnt;
+
+            for (int i = 0; i < finish.GetLength(0); i++)
+            {
+                cnt = 0;
+                for (int j = 0; j < finish.GetLength(1); j++)
+                {
+                    int place = finish[i, j];
+                    if (gameBoard[place] == 0)
+                    {
+                        break;
+                    }
+                    else if (gameBoard[place] == k)
+                    {
+                        cnt++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (cnt == finish.GetLength(1))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int shiftTurn(Boolean p)
+        {
+            int point;
+            if(p)
+            {
+                point = 2;
+            }
+            else
+            {
+                point = 1;
+            }
+
+            return point;
+        }
+
+        public void clear(int q, int r)
+        {
+            if(judge(q))
+            {
+                MessageBox.Show(player[q] + "の価値");
+                BoardEnable(false);
+                return;
+            }
+            if(r >= 9)
+            {
+                MessageBox.Show("引き分け");
+                BoardEnable(false);
+                return;
+            }
         }
     }
 }
