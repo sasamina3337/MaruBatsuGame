@@ -38,7 +38,7 @@ namespace _3目並べ
             Turn = random.Next(2) + 1;
             YourTurn = (Turn == 1);
             cpuTurn = shiftTurn(YourTurn);
-            label.Text = "あなたの手番は" + mark[Turn] + "です。" ;
+            label.Text = "あなたの手番は" + mark[Turn] + "です。";
 
         }
         public void BoardEnable(Boolean l)
@@ -54,7 +54,7 @@ namespace _3目並べ
             }
         }
 
-        private void buttonALl_Click(object sender, EventArgs e)
+        private void buttonAll_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             Button cpubtn;
@@ -65,7 +65,19 @@ namespace _3目並べ
 
             ButtonMemory();
 
-            clear(Turn, gameCount);
+            if (judge(Turn))
+            {
+                MessageBox.Show(player[Turn] + "の勝利");
+                BoardEnable(false);
+                return;
+            }
+
+            if (gameCount >= 9)
+            {
+                MessageBox.Show("引き分け");
+                BoardEnable(false);
+                return;
+            }
 
             while (n == -1)
             {
@@ -84,7 +96,19 @@ namespace _3目並べ
 
             ButtonMemory();
 
-            clear(cpuTurn, gameCount);
+            if (judge(cpuTurn))
+            {
+                MessageBox.Show(player[cpuTurn] + "の勝利");
+                BoardEnable(false);
+                return;
+            }
+            if (gameCount >= 9)
+            {
+                MessageBox.Show("引き分け");
+                BoardEnable(false);
+                return;
+            }
+
         }
 
         public void ButtonMemory()
@@ -113,7 +137,7 @@ namespace _3目並べ
             }
         }
 
-        public void Drow(Boolean g, Button h) 
+        public void Drow(Boolean g, Button h)
         {
             if (g)
             {
@@ -172,7 +196,7 @@ namespace _3目並べ
         public int shiftTurn(Boolean p)
         {
             int point;
-            if(p)
+            if (p)
             {
                 point = 2;
             }
@@ -182,22 +206,6 @@ namespace _3目並べ
             }
 
             return point;
-        }
-
-        public void clear(int q, int r)
-        {
-            if(judge(q))
-            {
-                MessageBox.Show(player[q] + "の価値");
-                BoardEnable(false);
-                return;
-            }
-            if(r >= 9)
-            {
-                MessageBox.Show("引き分け");
-                BoardEnable(false);
-                return;
-            }
         }
     }
 }
