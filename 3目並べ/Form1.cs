@@ -32,9 +32,10 @@ namespace _3目並べ
         {
             BoardEnable(true);
             gameCount = 0;
-            ButtonMemory();
             Random random = new Random();
-            YourTurn = (random.Next(2) == 0);
+            Turn = random.Next(2) + 1;
+            YourTurn = (Turn == 1);
+            label.Text = "あなたの手番は" + mark[Turn] + "です。" ;
 
         }
         public void BoardEnable(Boolean l)
@@ -46,32 +47,47 @@ namespace _3目並べ
                 c = this.Controls.Find("button" + i.ToString(), true);
                 btn = (Button)c[0];
                 btn.Enabled = l;
+                btn.Text = mark[0];
             }
         }
 
         private void buttonALl_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
+            Button cpubtn;
+            int n = -1;
+            Random randomcpu = new Random();
+
+            Drow(YourTurn, btn);
+
             ButtonMemory();
-            gameCount++;
-            if (YourTurn)
+
+            while (n == -1)
             {
-                btn.Text = mark[1];
+                int randomIndex = randomcpu.Next(9);
+                if (gameBoard[randomIndex] == 0)
+                {
+                    n = randomIndex;
+                }
             }
-            else
-            {
-                btn.Text = mark[2];
-            }
+
+            Control[] d;
+            d = this.Controls.Find("button" + n.ToString(), true);
+            cpubtn = (Button)d[0];
+
+            Drow(!YourTurn, cpubtn);
+
+            ButtonMemory();
         }
 
         public void ButtonMemory()
         {
-            Control[] d;
+            Control[] f;
             Button btn;
-            for (int i = 0; i < gameBoard.Length && i < 9; i++)
+            for (int i = 0; i < gameBoard.Length; i++)
             {
-                d = this.Controls.Find("button" + i.ToString(), true);
-                btn = (Button)d[0];
+                f = this.Controls.Find("button" + i.ToString(), true);
+                btn = (Button)f[0];
 
                 if (btn.Text == mark[0])
                 {
@@ -88,6 +104,21 @@ namespace _3目並べ
                     btn.Enabled = false;
                 }
             }
+        }
+
+        public void Drow(Boolean g, Button h) 
+        {
+            if (g)
+            {
+                h.Text = mark[1];
+            }
+            else
+            {
+                h.Text = mark[2];
+            }
+
+            gameCount++;
+
         }
     }
 }
