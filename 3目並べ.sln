@@ -5,6 +5,11 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3目並べ", "3目並べ\3目並べ.csproj", "{B19FFB4B-E8F2-4C87-B124-D873F2AAA8B9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{11E7138D-8833-49C2-AC6C-397158740E00}"
+	ProjectSection(SolutionItems) = preProject
+		アイコン1.ico = アイコン1.ico
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
