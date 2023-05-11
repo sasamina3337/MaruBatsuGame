@@ -32,6 +32,7 @@ namespace _3目並べ
 
         private void start_Click(object sender, EventArgs e)
         {
+            player = new string[] { "", "あなた", "CPU" };
             Button start = (Button)sender;
             BoardEnable(true);
             gameCount = 0;
