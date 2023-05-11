@@ -32,13 +32,31 @@ namespace _3目並べ
 
         private void start_Click(object sender, EventArgs e)
         {
+            Button start = (Button)sender;
             BoardEnable(true);
             gameCount = 0;
+            start.Text = "リセット";
+
             Random random = new Random();
             Turn = random.Next(2) + 1;
             YourTurn = (Turn == 1);
             cpuTurn = shiftTurn(YourTurn);
             label.Text = "あなたの手番は" + mark[Turn] + "です。";
+
+            int n = random.Next(9);
+
+            if (!YourTurn)
+            {
+                player = new string[] {"", "CPU", "あなた"};
+                Button cpubtn;
+                Control[] d;
+                d = this.Controls.Find("button" + n.ToString(), true);
+                cpubtn = (Button)d[0];
+
+                Drow(!YourTurn, cpubtn);
+
+                ButtonMemory();
+            }
 
         }
         public void BoardEnable(Boolean l)
@@ -155,14 +173,14 @@ namespace _3目並べ
         private Boolean judge(int k)
         {
             int[,] finish = new int[8, 3] {{0, 1, 2},
-                                   {3, 4, 5},
-                                   {6, 7, 8},
-                                   {0, 3, 6},
-                                   {1, 4, 7},
-                                   {2, 5, 8},
-                                   {0, 4, 8},
-                                   {2, 4, 6}
-                                  };
+                           {3, 4, 5},
+                           {6, 7, 8},
+                           {0, 3, 6},
+                           {1, 4, 7},
+                           {2, 5, 8},
+                           {0, 4, 8},
+                           {2, 4, 6}
+                          };
             int cnt;
 
             for (int i = 0; i < finish.GetLength(0); i++)
